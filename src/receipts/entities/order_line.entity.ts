@@ -1,13 +1,4 @@
-import { Discount } from 'src/discounts/entities/discount.entity';
-import { Product } from 'src/products/entities/product.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Receipt } from './receipt.entity';
 
 @Entity()
@@ -15,9 +6,14 @@ export class OrderLine {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => Product)
-  @JoinColumn()
-  product: Product;
+  @Column()
+  productName: string;
+
+  @Column()
+  productDescription: string;
+
+  @Column()
+  productPrice: number;
 
   @Column()
   qty: number;
@@ -25,10 +21,18 @@ export class OrderLine {
   @Column()
   price: number;
 
+  @Column()
+  discountInAmount: number;
+
+  @Column()
+  discountInPercent: number;
+
+  @Column()
+  taxInAmount: number;
+
+  @Column()
+  taxInPercent: number;
+
   @ManyToOne(() => Receipt, (receipt) => receipt.order_lines)
   receipt: Receipt;
-
-  @OneToOne(() => Discount)
-  @JoinColumn()
-  discount: Discount;
 }

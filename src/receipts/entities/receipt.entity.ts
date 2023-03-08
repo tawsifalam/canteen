@@ -1,13 +1,4 @@
-import { Discount } from 'src/discounts/entities/discount.entity';
-import { PaymentMethod } from 'src/payment_methods/entities/payment_method.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  JoinColumn,
-  OneToOne,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderLine } from './order_line.entity';
 export enum ReceiptTypeEnum {
   SALE = 'SALE',
@@ -41,9 +32,8 @@ export class Receipt {
   @OneToMany(() => OrderLine, (orderLine) => orderLine.receipt)
   order_lines: OrderLine[];
 
-  @OneToOne(() => PaymentMethod)
-  @JoinColumn()
-  payment_method: PaymentMethod;
+  @Column()
+  payment_method: string;
 
   @Column()
   cash_received: number;
