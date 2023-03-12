@@ -17,7 +17,7 @@ export class Product {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
   @Column({ default: false })
@@ -32,10 +32,10 @@ export class Product {
   @Column({ unique: true })
   sku: number;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
-  @Column()
+  @Column({ nullable: true })
   qty_in_stock: number;
 
   @Column()

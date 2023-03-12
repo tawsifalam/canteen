@@ -44,12 +44,15 @@ export class ProductsService {
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const { category_id, ...restCreateProductDto } = createProductDto;
 
-    const components = await Promise.all(
-      restCreateProductDto.components.map((component) =>
-        this.preloadComponentById(component),
-      ),
-    );
-    const category = await this.preloadCategoryById(category_id);
+    const components =
+      restCreateProductDto.components &&
+      (await Promise.all(
+        restCreateProductDto.components.map((component) =>
+          this.preloadComponentById(component),
+        ),
+      ));
+    const category =
+      category_id && (await this.preloadCategoryById(category_id));
     const product = this.productsRepository.create({
       ...restCreateProductDto,
       components,
