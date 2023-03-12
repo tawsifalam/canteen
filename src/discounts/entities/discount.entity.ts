@@ -16,10 +16,10 @@ export class Discount {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   discount_amount: number;
 
-  @Column()
+  @Column({ nullable: true })
   discount_percent: number;
 
   @Column({
