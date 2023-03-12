@@ -1,5 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { OrderLine } from './order_line.entity';
+import {
+  Column,
+  Entity,
+  Generated,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
+import { OrderLine } from './order-line.entity';
 export enum ReceiptTypeEnum {
   SALE = 'SALE',
   REFUND = 'REFUND',
@@ -12,42 +19,50 @@ export enum DiningOptionsEnum {
 }
 
 @Entity()
+@Unique(['serial'])
 export class Receipt {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
+  @Generated('increment')
+  serial: number;
+
+  @Column({ nullable: true })
   note: string;
 
   @Column({
     type: 'enum',
-    enum: ReceiptTypeEnum.SALE,
+    enum: ReceiptTypeEnum,
     default: ReceiptTypeEnum.SALE,
   })
   receipt_type: ReceiptTypeEnum;
 
-  @Column()
+  @Column({ nullable: true })
   refund_for: string;
 
-  @OneToMany(() => OrderLine, (orderLine) => orderLine.receipt)
+  @OneToMany(() => OrderLine, (orderLine) => orderLine.receipt, {
+    cascade: true,
+    eager: true,
+  })
   order_lines: OrderLine[];
 
   @Column()
   payment_method: string;
 
-  @Column()
+  @Column({ nullable: true })
   cash_received: number;
 
-  @Column()
+  @Column({ nullable: true })
   cash_returned: number;
 
   @Column()
   total_money: number;
 
-  @Column()
+  @Column({ nullable: true })
   total_taxes: number;
 
-  @Column()
+  @Column({ nullable: true })
   total_discounts: number;
 
   @Column({
@@ -60,6 +75,6 @@ export class Receipt {
   @Column({ type: 'timestamp' })
   receipt_date: Date;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true })
   cancelled_date: Date;
 }
