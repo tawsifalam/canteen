@@ -30,7 +30,7 @@ export class ProductsService {
   }
 
   async findOne(id: string): Promise<Product> {
-    const product = this.productsRepository.findOne({
+    const product = await this.productsRepository.findOne({
       where: { id },
       relations: ['category', 'components'],
     });
@@ -89,7 +89,6 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
-
     return this.productsRepository.save(product);
   }
 

@@ -44,7 +44,7 @@ export class Product {
   @Column()
   cost: number;
 
-  @OneToOne(() => Category)
+  @OneToOne(() => Category, { eager: true })
   @JoinColumn()
   category: Category;
 
