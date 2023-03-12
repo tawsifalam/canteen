@@ -7,7 +7,8 @@ import { DiscountsModule } from './discounts/discounts.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ReceiptsModule } from './receipts/receipts.module';
 import { TaxesModule } from './taxes/taxes.module';
-import { PaymentMethodsModule } from './payment_methods/payment_methods.module';
+import { PaymentMethodsModule } from './payment_methods/payment-methods.module';
+import { ComponentsModule } from './components/components.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PaymentMethodsModule } from './payment_methods/payment_methods.module';
     ReceiptsModule,
     TaxesModule,
     PaymentMethodsModule,
+    ComponentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,9 +1,10 @@
 import { Category } from 'src/categories/entities/category.entity';
-import { Tax } from 'src/taxes/entities/tax.entity';
+import { Component } from 'src/components/entities/component.entity';
 import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -19,16 +20,16 @@ export class Product {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ default: false })
   track_stock: boolean;
 
-  @Column()
+  @Column({ default: false })
   sold_by_weight: boolean;
 
-  @Column()
+  @Column({ default: false })
   is_composite: boolean;
 
-  @Column()
+  @Column({ unique: true })
   sku: number;
 
   @Column()
@@ -40,11 +41,16 @@ export class Product {
   @Column()
   price: number;
 
+  @Column()
+  cost: number;
+
   @OneToOne(() => Category)
   @JoinColumn()
   category: Category;
 
-  @OneToOne(() => Tax)
-  @JoinColumn()
-  tax: Tax;
+  @OneToMany(() => Component, (component) => component.product, {
+    eager: true,
+    cascade: true,
+  })
+  components: Component[];
 }
