@@ -59,7 +59,8 @@ export class ProductsService {
       category,
     });
 
-    return this.productsRepository.save(product);
+    const { id: productId } = await this.productsRepository.save(product);
+    return this.findOne(productId);
   }
 
   async update(
@@ -89,7 +90,8 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
-    return this.productsRepository.save(product);
+    const { id: productId } = await this.productsRepository.save(product);
+    return this.findOne(productId);
   }
 
   async remove(id: string): Promise<void> {
