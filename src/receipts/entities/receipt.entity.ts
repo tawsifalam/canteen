@@ -47,7 +47,7 @@ export class Receipt {
   })
   order_lines: OrderLine[];
 
-  @Column()
+  @Column({ default: 'CASH' })
   payment_method: string;
 
   @Column({ nullable: true })
