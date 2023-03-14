@@ -7,7 +7,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -15,6 +17,7 @@ import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
 
 @Controller('products')
+@UseGuards(AuthGuard('api-key'))
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
   @Get()

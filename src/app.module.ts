@@ -9,19 +9,12 @@ import { ReceiptsModule } from './receipts/receipts.module';
 import { TaxesModule } from './taxes/taxes.module';
 import { PaymentMethodsModule } from './payment_methods/payment-methods.module';
 import { ComponentsModule } from './components/components.module';
+import { typeOrmConfigAsync } from './config/typeorm.config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'pass123',
-      database: 'postgres',
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
+    TypeOrmModule.forRootAsync(typeOrmConfigAsync),
     ProductsModule,
     DiscountsModule,
     CategoriesModule,
@@ -29,6 +22,7 @@ import { ComponentsModule } from './components/components.module';
     TaxesModule,
     PaymentMethodsModule,
     ComponentsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
